@@ -1,7 +1,10 @@
 import './singleTrip.css'
 import tripImg from '../../../../resources/images/iceland.jpg'
 
+import { useParams } from 'react-router-dom';
+
 const SingleTrip = () => {
+  const { tripId } = useParams()
     return (
     <main className="trip-page">
       <h1 className="visually-hidden">Travel App</h1>
