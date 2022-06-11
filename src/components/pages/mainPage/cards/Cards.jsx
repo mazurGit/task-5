@@ -1,5 +1,6 @@
 import './cards.css';
 import tripImg from '../../../../resources/images/iceland.jpg';
+import { Link } from 'react-router-dom';
 
 const Card = () =>{
   return (
@@ -18,7 +19,7 @@ const Card = () =>{
               <strong className="trip-price__value">7000 $</strong>
               </div>
           </div>
-          <a href="./trip.html" className="button">Discover a trip</a>
+          <Link to="./trip" className="button">Discover a trip</Link>
       </li>
   )
 }
