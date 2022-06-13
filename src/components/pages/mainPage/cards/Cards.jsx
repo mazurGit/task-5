@@ -1,7 +1,5 @@
 import './cards.css';
-import tripImg from '../../../../resources/images/iceland.jpg';
 
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import data from '../../../../resources/api/trips-list.json';

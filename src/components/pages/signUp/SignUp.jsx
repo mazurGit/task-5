@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 const SignUp = () =>{
     return (
@@ -22,7 +22,7 @@ const SignUp = () =>{
             </form>
             <span>
             Already have an account?
-            <a href="./sign-in.html" className="sign-up-form__link">Sign In</a>
+            <Link to="../sing-in" className="sign-up-form__link">Sign In</Link>
             </span>
       </main>
     )
