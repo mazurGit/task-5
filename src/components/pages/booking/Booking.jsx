@@ -5,13 +5,12 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const Booking = () =>{
-    useEffect(() =>{
-        
-    })
-    const[bookingData, setBookingData] = useState(data)
+
+    const[bookingData, setBookingData] = useState([])
     
     useEffect (() =>{
-        setBookingData((state)=>filterByDate(state))
+        //ussualy I fetch data here , this is just request  imitation
+        setBookingData(filterByDate(data))
     },[])
 
 

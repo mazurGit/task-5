@@ -1,5 +1,6 @@
 import './cards.css';
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,38 +10,52 @@ import data from '../../../../resources/api/trips-list.json';
 
 
 const CardsBlock = (props) => {  
-  let cards = null;
+  const [cardData, setCardsData] = useState([])
 
-  let tempData =[...data];
+  let filteredData = [...cardData]
+
+  useEffect(() => {
+    //ussualy I fetch data here , this is just request  imitation
+    setCardsData(data)
+  },[])
+
+  filteredData = onFilterApply(cardData, props.filters)
+
+
+  function onFilterApply(array, filters){
+    let tempData =[...array];
  
-  if (props.filters){
-    const {filters:{search, duration, level}} = props
-
-    if(search){
+    if (filters){
+      const {search, duration, level} = filters
+  
+      if(search){
+        tempData = tempData
+          .filter(item => {
+            const regExp = new RegExp(`${search}`,'i')
+            return item.title.search(regExp) > -1
+        })
+      }
+    
+    if(duration){
       tempData = tempData
-        .filter(item => {
-          const regExp = new RegExp(`${search}`,'i')
-          return item.title.search(regExp) > -1
-      })
+        .filter(item =>{
+           return  duration.length < 2
+           ?  true
+           : item.duration > duration[0] && item.duration <  duration[1] 
+        })
     }
   
-  if(duration){
-    tempData = tempData
-      .filter(item =>{
-         return  duration.length < 2
-         ?  true
-         : item.duration > duration[0] && item.duration <  duration[1] 
-      })
+    if(level){
+      tempData = tempData.filter(item =>{
+        return item.level === level
+        })
+      }
+    } 
+    return tempData
   }
-
-  if(level){
-    tempData = tempData.filter(item =>{
-      return item.level === level
-    })
-  }
-} 
+  
     
-  cards = tempData.map(item=> <Card info ={item} key={item.id}/>)
+ const cards = filteredData.map(item=> <Card info ={item} key={item.id}/>)
 
   
 

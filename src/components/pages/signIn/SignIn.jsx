@@ -65,7 +65,7 @@ const SignIn = () =>{
         </form>
         <span>
             Already have an account?
-            <Link to="../sing-up" className="sign-in-form__link">Sign Up</Link>
+            <Link to="/sing-up" className="sign-in-form__link">Sign Up</Link>
         </span>
         </main>
     )
