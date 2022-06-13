@@ -4,19 +4,20 @@ import { Link } from 'react-router-dom';
 
 import data from '../../../../resources/api/trips-list.json';
 
+import { useState } from 'react';
+
 
 
 const CardsBlock = (props) => {  
   let cards = null;
-  let toDisplay =[...data];
+
+  let tempData =[...data];
  
-
-
   if (props.filters){
     const {filters:{search, duration, level}} = props
 
     if(search){
-      toDisplay = toDisplay
+      tempData = tempData
         .filter(item => {
           const regExp = new RegExp(`${search}`,'i')
           return item.title.search(regExp) > -1
@@ -24,7 +25,7 @@ const CardsBlock = (props) => {
     }
   
   if(duration){
-    toDisplay = toDisplay
+    tempData = tempData
       .filter(item =>{
          return  duration.length < 2
          ?  true
@@ -33,13 +34,13 @@ const CardsBlock = (props) => {
   }
 
   if(level){
-    toDisplay = toDisplay.filter(item =>{
+    tempData = tempData.filter(item =>{
       return item.level === level
     })
   }
 } 
     
-  cards = toDisplay.map(item=> <Card info ={item} key={item.id}/>)
+  cards = tempData.map(item=> <Card info ={item} key={item.id}/>)
 
   
 
