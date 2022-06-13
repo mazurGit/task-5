@@ -4,6 +4,7 @@ import HeaderNav from '../headerNav/HeaderNav'
 import Footer from '../footer/Footer';
 import TripPopup from "../tripPopup/tripPopup";
 import { SignIn, SignUp, MainPage, Booking, SingleTrip } from '../pages/index';
+import cards from '../../resources/api/book-list.json'
 
 import { useState } from "react";
 
