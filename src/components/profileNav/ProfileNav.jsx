@@ -3,8 +3,8 @@ import userImg from '../../resources/images/user.svg'
 
 import { Link } from 'react-router-dom'
 
-const ProfileNav = (props) =>{
-    const { name } = props
+const ProfileNav = () =>{
+    const name = 'John Doe';
 
 
     return(
@@ -12,7 +12,7 @@ const ProfileNav = (props) =>{
             <span className="visually-hidden">Profile</span>
             <img src={userImg} alt="profile icon" />
             <ul className="profile-nav__list">
-                {name? <ProfileNavSignedIn/>: <ProfileNavSignedOut name ={name}/>}
+                {name? <ProfileNavSignedIn name ={name}/>: <ProfileNavSignedOut />}
             </ul>
         </>
     )
