@@ -25,7 +25,6 @@ const SignIn = () =>{
         const target = e.target
         if (target.value.length < 3 ) {
             target.style.boxShadow = '0 0 2px 1px red'
-            target.focus()
         } else{
             target.style.boxShadow = ''
         }
@@ -58,7 +57,7 @@ const SignIn = () =>{
                 value={password}
                 onChange={onInputChange} 
                 onBlur={onBlur} 
-                title = "Minimum value is 3 characters"
+                title = "Minimum 3 characters"
                 required 
              />
             </label>
