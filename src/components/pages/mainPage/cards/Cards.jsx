@@ -6,8 +6,43 @@ import data from '../../../../resources/api/trips-list.json';
 
 
 
-const CardsBlock = () => {
-  const cards = data.map(item=> <Card info ={item} key={item.id}/>)
+const CardsBlock = (props) => {  
+  let cards = null;
+  let toDisplay =[...data];
+ 
+
+
+  if (props.filters){
+    const {filters:{search, duration, level}} = props
+
+    if(search){
+      toDisplay = toDisplay
+        .filter(item => {
+          const regExp = new RegExp(`${search}`,'i')
+          return item.title.search(regExp) > -1
+      })
+    }
+  
+  if(duration){
+    toDisplay = toDisplay
+      .filter(item =>{
+         return  duration.length < 2
+         ?  true
+         : item.duration > duration[0] && item.duration <  duration[1] 
+      })
+  }
+
+  if(level){
+    toDisplay = toDisplay.filter(item =>{
+      return item.level === level
+    })
+  }
+} 
+    
+  cards = toDisplay.map(item=> <Card info ={item} key={item.id}/>)
+
+  
+
     return (
         <section className="trips">
         <h2 className="visually-hidden">Trips List</h2>
@@ -20,7 +55,7 @@ const CardsBlock = () => {
 
 const Card = ({info}) =>{
 
-  const { title, level, duration, price, image} = info
+  const { title, level, duration, price, image, id} = info
 
   return (
       <li className="trip-card">
@@ -38,7 +73,7 @@ const Card = ({info}) =>{
               <strong className="trip-price__value">{price}$</strong>
               </div>
           </div>
-          <Link to="./trip" className="button">Discover a trip</Link>
+          <Link to={`./trip/${id}`} className="button">Discover a trip</Link>
       </li>
   )
 }
