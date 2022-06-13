@@ -3,7 +3,7 @@ import userImg from '../../resources/images/user.svg'
 
 import { Link } from 'react-router-dom'
 
-const ProfileNav = (props) =>{
+const ProfileNav = () =>{
     const name = 'John Doe';
 
 

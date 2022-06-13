@@ -3,6 +3,7 @@ import data from '../../../resources/api/trips-list.json'
 
 
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const SingleTrip = (props) => {
   const {setDislpayTrip} = props
@@ -38,5 +39,8 @@ const SingleTrip = (props) => {
     )
 }
 
+SingleTrip.propTypes = {
+  setDislpayTrip:PropTypes.func
+}
 
 export default SingleTrip;

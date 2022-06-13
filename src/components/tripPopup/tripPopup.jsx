@@ -1,6 +1,7 @@
 import './tripPopup.css';
 
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
 
@@ -76,6 +77,11 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
             </div>
         </div>
     )
+}
+
+TripPopup.propTypes = {
+    displayTripPopup:PropTypes.string,
+    setDislpayTrip:PropTypes.func
 }
 
 

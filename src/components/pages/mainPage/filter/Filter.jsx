@@ -1,6 +1,7 @@
 import './filter.css'
 
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Filter = (props) =>{
     const [search, setSearch] = useState('');
@@ -88,5 +89,11 @@ const Filter = (props) =>{
       </section>
     )
 }
+
+Filter.propTypes = {
+  setFilters: PropTypes.func
+}
+
+
 
 export default Filter;
