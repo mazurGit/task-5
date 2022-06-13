@@ -4,12 +4,21 @@ import data from '../../../resources/api/trips-list.json'
 
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 const SingleTrip = (props) => {
+  const[card,setCard] = useState('')
   const {setDislpayTrip} = props
   const { tripId } = useParams()
-  const currentCard = data.filter(item => item.id === tripId)
-  const { title, level, duration, price, image, description} = currentCard[0]
+
+  useEffect( () =>{
+    //ussualy I fetch data here , this is just request  imitation
+    setCard (data.filter(item => item.id === tripId)[0])
+  },[tripId])
+
+
+
+  const { title, level, duration, price, image, description} = card
 
 
 

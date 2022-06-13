@@ -4,7 +4,6 @@ import HeaderNav from '../headerNav/HeaderNav'
 import Footer from '../footer/Footer';
 import TripPopup from "../tripPopup/tripPopup";
 import { SignIn, SignUp, MainPage, Booking, SingleTrip } from '../pages/index';
-import cards from '../../resources/api/book-list.json'
 
 import { useState } from "react";
 
@@ -15,10 +14,7 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/sing-in" element={<Header/>}/>
-                <Route path="/sing-up" element={<Header/>}/>
                 <Route path="*" element={<Header><HeaderNav/></Header>}/>
-            
             </Routes>
                 
             <Routes>
