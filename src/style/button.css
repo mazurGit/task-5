@@ -13,7 +13,11 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
   }
-  
+
+.button a{
+  text-decoration: none;
+  color: var(--color-white);
+}
 .button:hover {
     background-color: var(--color-blue-300);
 }   
