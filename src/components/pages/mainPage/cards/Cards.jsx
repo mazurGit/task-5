@@ -1,10 +1,10 @@
 import './cards.css';
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 
 import data from '../../../../resources/api/trips-list.json';
-
-import { useState } from 'react';
 
 
 
@@ -78,4 +78,13 @@ const Card = ({info}) =>{
       </li>
   )
 }
+
+CardsBlock.propTypes = {
+  filters: PropTypes.object
+}
+
+Card.propTypes = {
+  info: PropTypes.object
+}
+
 export default CardsBlock;

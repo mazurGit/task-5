@@ -2,7 +2,7 @@ import './booking.css';
 import data from '../../../resources/api/book-list.json';
 
 import { useState, useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 
 const Booking = () =>{
     useEffect(() =>{
@@ -65,5 +65,8 @@ const BokingItem = ({data, onDelete}) => {
 
 
 
-
+BokingItem.propTypes = {
+    data: PropTypes.object,
+    onDelete: PropTypes.func
+}
 export default Booking;
