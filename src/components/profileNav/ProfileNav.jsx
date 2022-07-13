@@ -1,45 +1,34 @@
 import './profileNav.css'
 import userImg from '../../resources/images/user.svg'
 
-import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { storegeRemoveToken } from '../../helpers/localStorage';
+import { useNavigate } from 'react-router-dom'
 
 const ProfileNav = () =>{
-    const name = 'John Doe';
+    const user = useSelector(state => state.user.userData)
+    const navigate = useNavigate()
 
+    const onSignOut =() =>{
+        storegeRemoveToken()
+        navigate('/sing-in')
+    } 
 
     return(
         <>
             <span className="visually-hidden">Profile</span>
             <img src={userImg} alt="profile icon" />
             <ul className="profile-nav__list">
-                {name? <ProfileNavSignedIn name ={name}/>: <ProfileNavSignedOut />}
+                <li className="profile-nav__item profile-nav__username">
+                    {user ? user.fullName : null}
+                </li>
+                <li className="profile-nav__item">
+                    <button 
+                    className="profile-nav__sign-out button"
+                    onClick={onSignOut}
+                    >Sign Out</button>
+                </li>
             </ul>
-        </>
-    )
-}
-
-const ProfileNavSignedOut = () =>{
-    return (
-        <>
-            <li className="profile-nav__item">
-                 <button className="profile-nav__sign-in button"><Link to='/sing-in'> Sign In </Link></button>  
-            </li>
-            <li className="profile-nav__item">
-                 <button className="profile-nav__sign-up button"><Link to='/sing-up'>Sign Up</Link> </button> 
-            </li>
-        </>  
-    )
-   
-}
-
-const ProfileNavSignedIn = (props) => {
-    const {name} = props
-    return (
-        <>
-            <li className="profile-nav__item profile-nav__username">{name}</li>
-            <li className="profile-nav__item">
-                <button className="profile-nav__sign-out button">Sign Out</button>
-            </li>
         </>
     )
 }
