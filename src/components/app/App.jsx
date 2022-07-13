@@ -7,14 +7,15 @@ import {useSelector} from 'react-redux';
 import { BoundaryPage } from '../boundary/boundaryPage';
 import { fetchAllTrips } from "../../store/actions/trips";
 import { fetchBooking } from '../../store/actions/booking';
+import { fetchSingleTrip } from '../../store/actions/singleTrip';
 import { SignIn, SignUp, MainPage, Booking, SingleTrip } from '../pages/index';
-
 import { useState } from "react";
 
 const App = () => {
     const [displayTripPopup, setDislpayTrip] = useState('none')
     const cardsLoadingStatus = useSelector(state => state.trips.tripsLoadingStatus)
     const bookingLoadingStatus = useSelector(state => state.booking.bookingLoadingStatus)
+    const tripLoadingStatus = useSelector(state => state.singleTrip.tripDataLoadingStatus)
 
     return (
         <Router>
@@ -37,7 +38,13 @@ const App = () => {
                     loadDataFunc = {fetchBooking} 
                     statusRef = {bookingLoadingStatus} />
                 }/>
-                <Route path="/trip/:tripId" element ={<SingleTrip setDislpayTrip={setDislpayTrip}/>} />
+                <Route path="/trip/:tripId" element={
+                    <BoundaryPage 
+                    elem ={<SingleTrip 
+                    setDislpayTrip={setDislpayTrip}/>} 
+                    loadDataFunc = {fetchSingleTrip} 
+                    statusRef = {tripLoadingStatus}/>
+                }/>
                 <Route path="*" element={<MainPage/>}/>
             </Routes>
 
