@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { user } from "./reducers/user";
 import { trips } from "./reducers/trips";
+import { booking } from './reducers/booking';
 import service from "../helpers/requests";
 
 const store = configureStore({
     reducer:{
         user,
-        trips
+        trips,
+        booking
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware({
         thunk: {extraArgument:service}
