@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { fetchSignUp } from "../../../store/actions/user";
+import { useSelector } from "react-redux/es/exports";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () =>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
+    const dispatch = useDispatch()
+    const signStatus = useSelector(state => state.user.userSignStatus)
+    const navigate = useNavigate()
+
+
 
     const  onInputChange = (e)=> {
         const value = e.target.value
@@ -14,6 +24,9 @@ const SignUp = () =>{
                 break;
             case 'email':
                 setEmail(value)
+                break;
+            case 'full-name':
+                setName(value)
                 break;
             default:
                 break;
@@ -30,10 +43,37 @@ const SignUp = () =>{
         }
     }
 
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const data ={
+            fullName: name,
+            email,
+            password
+        }
+        dispatch(fetchSignUp(data))
+        .then((res) => {
+            if(!res.error){
+                navigate('/')
+            }        
+        })
+
+    }
+
+    const message = {
+        success:'You had successfully signed in!',
+        loading:'Working on it...',
+        fail:'User with this email already exist'
+    }
+
     return (
         <main className="sign-up-page">
             <h1 className="visually-hidden">Travel App</h1>
-            <form className="sign-up-form" autoComplete="off">
+            <form 
+                className="sign-up-form" 
+                autoComplete="off"
+                onSubmit={onSubmit}
+            >
+                
             <h2 className="sign-up-form__title">Sign Up</h2>
             <label className="trip-popup__input input">
                 <span className="input__heading">Full name</span>
@@ -41,6 +81,8 @@ const SignUp = () =>{
                     name="full-name" 
                     type="text" 
                     required 
+                    value={name}
+                    onChange={onInputChange}
                 />
             </label>
             <label className="trip-popup__input input">
@@ -67,6 +109,11 @@ const SignUp = () =>{
                     title = "Minimum 3 characters"
                     required 
                 />
+                <div style={{'textAlign':'center'}}>
+                    {signStatus === 'loading' ? message.loading : null}
+                    {signStatus === 'rejected' ? message.fail : null}
+                    {signStatus === 'loaded'? message.success : null } 
+            </div>
             </label>
             <button className="button" type="submit">Sign Up</button>
             </form>
