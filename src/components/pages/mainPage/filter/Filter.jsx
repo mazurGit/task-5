@@ -1,47 +1,39 @@
 import './filter.css'
 
 import { useState } from 'react';
-import PropTypes from 'prop-types';
-
-const Filter = (props) =>{
+import { useDispatch } from 'react-redux';
+import { setSearchValue, setLevelValue, setDurationValue } from '../../../../store/actions/trips';
+ 
+const Filter = () =>{
     const [search, setSearch] = useState('');
     const [duration, setDuration] = useState('');
     const [level,setLevel] = useState('');
+    const dispatch = useDispatch();
 
+    const handleValueChange = (value, localState, globalState) => {
+      localState(value)
+      dispatch(globalState(value))
+    }
 
     const onFilterChange = (e) => {
       const target = e.target;
-      const {setFilters} = props;
-
-      switch(target.name){
-
+      const value = target.value
+      switch(target.name){      
         case 'search':
-          setSearch(target.value)
-          setFilters((state)=> ({...state, search:target.value}))
+          handleValueChange(value, setSearch, setSearchValue)
           break;
 
         case 'duration':
-          const value = target.value
-            .split('x')
-            .map(item => {
-              return item? item.replace(/\D/g,''): Infinity
-            })
-
-          setDuration(target.value)
-          setFilters((state)=> ({...state, duration:value}))
+          handleValueChange(value, setDuration, setDurationValue)
           break;
 
         case 'level':
-          setLevel(target.value)
-          setFilters((state)=> ({...state, level:target.value}))
+          handleValueChange(value, setLevel, setLevelValue)
           break;
 
-        default:
-          break
+        default: break;
       }     
     }
-
-
 
     return (
       <section className="trips-filter">
@@ -89,11 +81,5 @@ const Filter = (props) =>{
       </section>
     )
 }
-
-Filter.propTypes = {
-  setFilters: PropTypes.func
-}
-
-
 
 export default Filter;
