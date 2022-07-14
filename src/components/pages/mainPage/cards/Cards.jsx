@@ -1,63 +1,40 @@
 import './cards.css';
 
-import { useState, useEffect } from 'react';
+import { useSelector  } from 'react-redux';
+import { createSelector } from '@reduxjs/toolkit';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 
-import data from '../../../../resources/api/trips-list.json';
-
-
-
-const CardsBlock = (props) => {  
-  const [cardData, setCardsData] = useState([])
-
-  let filteredData = [...cardData]
-
-  useEffect(() => {
-    //ussualy I fetch data here , this is just request  imitation
-    setCardsData(data)
-  },[])
-
-  filteredData = onFilterApply(cardData, props.filters)
-
-
-  function onFilterApply(array, filters){
-    let tempData =[...array];
- 
-    if (filters){
-      const {search, duration, level} = filters
+const CardsBlock = () => {  
   
-      if(search){
-        tempData = tempData
-          .filter(item => {
-            const regExp = new RegExp(`${search}`,'i')
-            return item.title.search(regExp) > -1
-        })
-      }
-    
-    if(duration){
-      tempData = tempData
-        .filter(item =>{
-           return  duration.length < 2
-           ?  true
-           : item.duration > duration[0] && item.duration <  duration[1] 
-        })
+  const tripsSelector = createSelector(
+    state => state.trips.filters.searchValue,
+    state => state.trips.filters.duration,
+    state => state.trips.filters.level,
+    state => state.trips.trips,
+    (search, duration, level, trips) => {
+    return trips
+      .filter(item => {
+        const regExp = new RegExp(`${search}`,'i')
+        return search
+          ? item.title.search(regExp) > -1
+          : item
+      })
+      .filter(item =>{
+        return  duration.length < 2
+        ? item
+        : item.duration > duration[0] && item.duration <  duration[1] 
+      })
+      .filter(item =>{
+        return level
+          ? item.level === level
+          : item
+      })
     }
+  )
   
-    if(level){
-      tempData = tempData.filter(item =>{
-        return item.level === level
-        })
-      }
-    } 
-    return tempData
-  }
-  
-    
- const cards = filteredData.map(item=> <Card info ={item} key={item.id}/>)
-
-  
+const tripsData = useSelector(tripsSelector)
+const cards = tripsData.map (item => <Card info ={item} key={item.id}/>)
 
     return (
         <section className="trips">
@@ -71,7 +48,7 @@ const CardsBlock = (props) => {
 
 const Card = ({info}) =>{
 
-  const { title, level, duration, price, image, id} = info
+const { title, level, duration, price, image, id} = info
 
   return (
       <li className="trip-card">
@@ -92,14 +69,6 @@ const Card = ({info}) =>{
           <Link to={`./trip/${id}`} className="button">Discover a trip</Link>
       </li>
   )
-}
-
-CardsBlock.propTypes = {
-  filters: PropTypes.object
-}
-
-Card.propTypes = {
-  info: PropTypes.object
 }
 
 export default CardsBlock;
