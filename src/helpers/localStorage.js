@@ -6,6 +6,6 @@ export const storageGetToken = () => {
     return localStorage.getItem('token')
 }
 
-export const storegeRemoveToken = () =>{
+export const storageRemoveToken = () =>{
     return localStorage.removeItem('token');
 }
