@@ -3,7 +3,7 @@ import './filter.css'
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSearchValue, setLevelValue, setDurationValue } from '../../../../store/actions/trips';
- 
+
 const Filter = () =>{
     const [search, setSearch] = useState('');
     const [duration, setDuration] = useState('');

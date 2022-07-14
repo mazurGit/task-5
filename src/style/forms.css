@@ -1,5 +1,6 @@
 .sign-up-page,
 .sign-in-page {
+  animation: fadeIn 1s ease-in-out;
   justify-content: center;
   align-items: center;
   padding-bottom: 50px;
