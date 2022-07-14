@@ -1,15 +1,22 @@
 import Filter from './filter/Filter';
 import Cards from './cards/Cards';
 
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { resetFilters } from '../../../store/actions/trips'
+import { useDispatch } from 'react-redux';
+
 
 const MainPage = () =>{
-    const[filtersValue, setFiltersValue] = useState(null)
+    const dispatch = useDispatch()
+    
+    useEffect(() => { 
+        dispatch(resetFilters())
+    })
     
     return (
         <>
-            <Filter setFilters = {setFiltersValue}/>
-            <Cards filters={filtersValue}/>
+            <Filter />
+            <Cards />
         </>   
     )
 }

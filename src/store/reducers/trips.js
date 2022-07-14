@@ -1,10 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit"
 import  {   
-            fetchAllTrips,
-            setSearchValue, 
-            setDurationValue,
-            setLevelValue
-        } from "../actions/trips"
+    fetchAllTrips,
+    setSearchValue, 
+    setDurationValue,
+    setLevelValue,
+    resetFilters
+} from "../actions/trips"
 
 const initialState = {
     trips:[],
@@ -36,5 +37,12 @@ export const trips = createReducer(initialState, builder => {
         })
         .addCase(setLevelValue, (state, action) => {
             state.filters.level  =action.payload
+        })
+        .addCase(resetFilters, state => { 
+            state.filters = {
+                searchValue:'',
+                duration:'',
+                level:''
+            };
         })
 })
