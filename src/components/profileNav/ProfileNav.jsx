@@ -2,7 +2,7 @@ import './profileNav.css'
 import userImg from '../../resources/images/user.svg'
 
 import { useSelector } from 'react-redux';
-import { storegeRemoveToken } from '../../helpers/localStorage';
+import { storageRemoveToken } from '../../helpers/localStorage';
 import { useNavigate } from 'react-router-dom'
 
 const ProfileNav = () =>{
@@ -10,7 +10,7 @@ const ProfileNav = () =>{
     const navigate = useNavigate()
 
     const onSignOut =() =>{
-        storegeRemoveToken()
+        storageRemoveToken()
         navigate('/sing-in')
     } 
 
