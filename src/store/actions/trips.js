@@ -19,3 +19,4 @@ export const setDurationValue = createAction('FILTER_DURATION',function prepare(
     }
 });
 export const setLevelValue = createAction('FILTER_LEVEL');
+export const resetFilters = createAction('FITLERS_RESET')
