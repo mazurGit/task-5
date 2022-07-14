@@ -1,4 +1,5 @@
 .trip-page {
+    animation: fadeIn 1s ease-in-out;
     padding: 60px 20px;
 }
 

@@ -1,5 +1,6 @@
 .trips {
     padding: 60px 20px;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .trip-list {

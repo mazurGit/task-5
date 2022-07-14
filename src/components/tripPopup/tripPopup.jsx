@@ -2,9 +2,12 @@ import './tripPopup.css';
 
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { fetchBookTrip, resetFormStatus } from '../../store/actions/booking';
+import { useRef } from 'react';
+import { Spinner } from '../spinner/Spinner';
+import { ErrorMessage } from '../error/error';
+import { OkStatus } from '../okStatus/okStatus';
 
 const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
 
@@ -14,6 +17,7 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
     const userData = useSelector(state => state.user.userData)
     const bookTripStatus = useSelector(state => state.booking.bookTripLoadingStatus)
     const dispatch = useDispatch();
+    const popupmRef = useRef()
 
     const clearForm = () => {
         setGuestsQty(1)
@@ -22,7 +26,7 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
 
     const message = {
         success:'You had successfully booked a trip!',
-        loading:'Working on it...',
+        loading:'Loading...',
         fail:'Something went wrong... Please try again later'
     }
 
@@ -46,8 +50,15 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
     }
  
     const onClose = () =>{
-        setDislpayTrip('none')
-        clearForm()
+        popupmRef.current.style.animation = 'fadeOut 1s ease-in-out'
+        setTimeout(() => {
+            setDislpayTrip('none')
+            popupmRef.current.style.animation = 'fadeIn 1s ease-in-out'
+            clearForm()
+            dispatch(resetFormStatus())
+        }, 1000);
+        
+        
     } 
 
     const onSubmit  = (e) =>{
@@ -61,8 +72,7 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
         dispatch(fetchBookTrip(data))
         .then(() => setTimeout(() => {
             onClose()
-            dispatch(resetFormStatus())
-        }, 2000))
+        }, 1000))
     }
 
     const Form = () =>{
@@ -71,6 +81,7 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
                 className="trip-popup__form"
                 autoComplete="off"
                 onSubmit= {onSubmit}
+
                 >
                 <div className="trip-info">
                 <h3 className="trip-info__title">Iceland</h3>
@@ -110,13 +121,16 @@ const TripPopup = ( {displayTripPopup, setDislpayTrip}) => {
     }
     
     return (
-        <div  style={{display:displayTripPopup}} >
-            <div className="modal" style={{"textAlign":"center"}}>
+        <div  
+            style={{display:displayTripPopup}} 
+            ref={popupmRef}
+        >
+            <div className="modal" style={{"textAlign":"center", 'minHeight':'370px'}}>
                 <div className="trip-popup">
                 <button className="trip-popup__close" onClick={onClose}>×</button>
-                    {bookTripStatus === 'loading' ? message.loading : null}
-                    {bookTripStatus === 'rejected' ? message.fail : null}
-                    {bookTripStatus === 'loaded'? message.success : null }
+                    {bookTripStatus === 'loading' ? <Spinner message={message.loading}/> : null}
+                    {bookTripStatus === 'rejected' ? <ErrorMessage message={message.fail}/>  : null}
+                    {bookTripStatus === 'loaded'? <OkStatus message={message.success}/> : null }
                     {bookTripStatus === 'idle'? <Form/> : null }     
                 </div>
             </div>
