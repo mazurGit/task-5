@@ -45,7 +45,12 @@ const App = () => {
                     loadDataFunc = {fetchSingleTrip} 
                     statusRef = {tripLoadingStatus}/>
                 }/>
-                <Route path="*" element={<MainPage/>}/>
+                 <Route path="*" element={
+                    <BoundaryPage 
+                    elem ={<MainPage/>} 
+                    loadDataFunc = {fetchAllTrips} 
+                    statusRef = {cardsLoadingStatus}/>
+                }/>
             </Routes>
 
             <Footer/>    
