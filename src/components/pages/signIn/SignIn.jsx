@@ -53,6 +53,13 @@ const SignIn = () =>{
         fail:'Wrong email or password!'
     }
 
+    const MsgBlock = ({message, style}) => {
+        return(
+            <div style={style}>
+                {message}
+            </div>
+        )
+    }
     return (   
         <main className="sign-in-page">
         <h1 className="visually-hidden">Travel App</h1>
@@ -88,9 +95,9 @@ const SignIn = () =>{
             </label>
             <button className="button" type="submit">Sign In</button>
             <div style={{'textAlign':'center'}}>
-                    {signStatus === 'loading' ? message.loading : null}
-                    {signStatus === 'rejected' ? message.fail : null}
-                    {signStatus === 'loaded'? message.success : null } 
+                    {signStatus === 'loading' ? <MsgBlock message={message.loading}/> : null}
+                    {signStatus === 'rejected' ? <MsgBlock message={message.fail} style={{'color':'red'}}/> : null}
+                    {signStatus === 'loaded'? <MsgBlock message={message.success}/> : null } 
             </div>
         </form>
         <span>
